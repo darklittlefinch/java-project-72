@@ -1,0 +1,52 @@
+plugins {
+    id 'application'
+    id 'checkstyle'
+    id 'jacoco'
+    id 'com.adarshr.test-logger' version '3.2.0'
+    id 'se.patrikerdes.use-latest-versions' version '0.2.18'
+    id 'com.github.ben-manes.versions' version '0.47.0'
+}
+
+group = 'hexlet.code'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation platform('org.junit:junit-bom:5.9.1')
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testImplementation 'org.assertj:assertj-core:3.24.2'
+
+    implementation("io.javalin:javalin:5.6.1")
+    implementation("org.slf4j:slf4j-simple:2.0.7")
+    implementation("io.javalin:javalin-rendering:5.6.0")
+    implementation("gg.jte:jte:3.0.1")
+
+
+}
+
+test {
+    useJUnitPlatform()
+    finalizedBy jacocoTestReport
+}
+
+application {
+    mainClass = "hexlet.code.App"
+}
+
+compileJava {
+    options.release = 20
+}
+
+testlogger {
+    theme 'mocha'
+    showStandardStreams true
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+    }
+}
