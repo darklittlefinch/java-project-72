@@ -18,12 +18,8 @@ jobs:
         uses: gradle/gradle-build-action@v2
         with:
           gradle-version: 8.3
-      - run: ./gradlew checkstyleMain
-        with:
-          build-root-directory: app
-      - run: ./gradlew test
-        with:
-          build-root-directory: app
+      - run: make lint
+      - run: make test
       - name: Publish code coverage
         uses: paambaati/codeclimate-action@v3.1.1
         env:
