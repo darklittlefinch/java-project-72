@@ -1,7 +1,13 @@
 package hexlet.code;
 
+import gg.jte.ContentType;
+import gg.jte.TemplateEngine;
+import gg.jte.resolve.ResourceCodeResolver;
+import hexlet.code.controller.RootController;
 import hexlet.code.repository.BaseRepository;
 
+import hexlet.code.util.NamedRoutes;
+import io.javalin.rendering.template.JavalinJte;
 import lombok.extern.slf4j.Slf4j;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
@@ -19,7 +25,7 @@ public class App {
 
     private static final String PORT_DEFAULT = "7070";
     private static final String JDBC_URL_DEFAULT = "jdbc:h2:mem:project";
-    private static final String HIKARI_CONFIG = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
+//    private static final String HIKARI_CONFIG = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
     private static final String DATABASE_FILE_NAME = "schema.sql";
 
     public static void main(String[] args) throws IOException, SQLException {
@@ -36,6 +42,13 @@ public class App {
     public static String getJdbcUrl() {
         String jdbcUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", JDBC_URL_DEFAULT);
         return jdbcUrl;
+    }
+
+    private static TemplateEngine createTemplateEngine() {
+        ClassLoader classLoader = App.class.getClassLoader();
+        ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
+        TemplateEngine templateEngine = TemplateEngine.create(codeResolver, ContentType.Html);
+        return templateEngine;
     }
 
     public static Javalin getApp() throws IOException, SQLException {
@@ -60,7 +73,9 @@ public class App {
             config.plugins.enableDevLogging();
         });
 
-        app.get("/", ctx -> ctx.result("Hello, World!"));
+        JavalinJte.init(createTemplateEngine());
+
+        app.get(NamedRoutes.rootPath(), RootController::index);
 
         return app;
     }
