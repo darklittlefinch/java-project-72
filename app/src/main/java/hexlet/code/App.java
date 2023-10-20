@@ -21,11 +21,10 @@ import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 @Slf4j
-public class App {
+public final class App {
 
     private static final String PORT_DEFAULT = "7070";
-    private static final String JDBC_URL_DEFAULT = "jdbc:h2:mem:project";
-//    private static final String HIKARI_CONFIG = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
+    private static final String JDBC_URL_DEFAULT = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
     private static final String DATABASE_FILE_NAME = "schema.sql";
 
     public static void main(String[] args) throws IOException, SQLException {
