@@ -54,7 +54,7 @@ public final class UrlController {
             return;
         }
 
-        if (UrlRepository.doesURLExist(normalizedURL)) {
+        if (UrlRepository.doesUrlExist(normalizedURL)) {
             ctx.sessionAttribute("flash", "This page already exist");
             ctx.sessionAttribute("flash-type", "info");
             ctx.redirect(NamedRoutes.urlsPath());
