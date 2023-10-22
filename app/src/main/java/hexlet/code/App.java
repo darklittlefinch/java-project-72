@@ -41,15 +41,15 @@ public final class App {
         return System.getenv().getOrDefault("JDBC_DATABASE_URL", JDBC_URL_DEFAULT);
     }
 
-    public static String getSqlFilename() {
-        return isProduction() ? "schema-postgres.sql" : "schema.sql";
-    }
+//    public static String getSqlFilename() {
+//        return isProduction() ? "schema-postgres.sql" : "schema.sql";
+//    }
 
     public static boolean isProduction() {
         return System.getenv().getOrDefault("APP_ENV", "dev").equals("prod");
     }
 
-    public static HikariConfig setData(HikariConfig hikariConfig) {
+    public static void setData(HikariConfig hikariConfig) {
         hikariConfig.setJdbcUrl(getJdbcUrl());
 
         if (isProduction()) {
@@ -58,7 +58,6 @@ public final class App {
             hikariConfig.setUsername(username);
             hikariConfig.setPassword(password);
         }
-        return hikariConfig;
     }
 
     private static TemplateEngine createTemplateEngine() {
@@ -75,7 +74,7 @@ public final class App {
 
         var dataSource = new HikariDataSource(hikariConfig);
 
-        var inputStream = App.class.getClassLoader().getResourceAsStream(getSqlFilename());
+        var inputStream = App.class.getClassLoader().getResourceAsStream("schema-postgres.sql");
         var reader = new BufferedReader(new InputStreamReader(inputStream));
         var sql = reader.lines().collect(Collectors.joining("\n"));
 
