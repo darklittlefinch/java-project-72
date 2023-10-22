@@ -62,7 +62,7 @@ public final class UrlRepository extends BaseRepository {
         }
     }
 
-    public static Optional<Url> findByName(String name) throws SQLException {
+    public static Url findByName(String name) throws SQLException {
         var sql = "SELECT * FROM urls WHERE name = ?";
         try (var conn = dataSource.getConnection();
              var stmt = conn.prepareStatement(sql)) {
@@ -73,13 +73,13 @@ public final class UrlRepository extends BaseRepository {
                 var id = resultSet.getLong("id");
                 var url = new Url(name, createdAt);
                 url.setId(id);
-                return Optional.of(url);
+                return url;
             }
-            return Optional.empty();
+            return null;
         }
     }
 
     public static boolean doesURLExist(String name) throws SQLException {
-        return findByName(name).isPresent();
+        return findByName(name) != null;
     }
 }
