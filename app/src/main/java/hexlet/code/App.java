@@ -26,7 +26,6 @@ public final class App {
 
     private static final String PORT_DEFAULT = "7070";
     private static final String JDBC_URL_DEFAULT = "jdbc:h2:mem:project;DB_CLOSE_DELAY=-1;";
-    private static final String DATABASE_FILE_NAME = "schema.sql";
 
     public static void main(String[] args) throws IOException, SQLException {
         Javalin app = getApp();
@@ -40,8 +39,23 @@ public final class App {
     }
 
     public static String getJdbcUrl() {
-        String jdbcUrl = System.getenv().getOrDefault("JDBC_DATABASE_URL", JDBC_URL_DEFAULT);
-        return jdbcUrl;
+        return System.getenv().getOrDefault("JDBC_DATABASE_URL", JDBC_URL_DEFAULT);
+    }
+
+    public static boolean isProduction() {
+        return System.getenv().getOrDefault("APP_ENV", "dev").equals("prod");
+    }
+
+    public static HikariConfig setData(HikariConfig hikariConfig) {
+        hikariConfig.setJdbcUrl(getJdbcUrl());
+
+        if (isProduction()) {
+            var username = System.getenv("JDBC_DATABASE_USERNAME");
+            var password = System.getenv("JDBC_DATABASE_PASSWORD");
+            hikariConfig.setUsername(username);
+            hikariConfig.setPassword(password);
+        }
+        return hikariConfig;
     }
 
     private static TemplateEngine createTemplateEngine() {
@@ -54,10 +68,10 @@ public final class App {
     public static Javalin getApp() throws IOException, SQLException {
 
         var hikariConfig = new HikariConfig();
-        hikariConfig.setJdbcUrl(getJdbcUrl());
+        setData(hikariConfig);
 
         var dataSource = new HikariDataSource(hikariConfig);
-        var url = App.class.getClassLoader().getResource(DATABASE_FILE_NAME);
+        var url = App.class.getClassLoader().getResource("schema.sql");
         var file = new File(url.getFile());
         var sql = Files.lines(file.toPath())
                 .collect(Collectors.joining("\n"));
