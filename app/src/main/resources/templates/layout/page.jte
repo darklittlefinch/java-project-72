@@ -1,6 +1,8 @@
+@import hexlet.code.dto.BasePage
 @import hexlet.code.util.NamedRoutes
 @import gg.jte.Content
 @param Content content
+@param BasePage page = null
 
 <!doctype html>
 <html lang="en">
@@ -13,6 +15,13 @@
               integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
               crossorigin="anonymous">
     </head>
+
+    @if(page != null)
+        <div class="alert alert-${page.getFlashType()}" role="alert">
+            ${page.getFlash()}
+        </div>
+    @endif
+
     <body>
         <div class="container">
             <header class="d-flex justify-content-center py-3">
@@ -21,25 +30,30 @@
                         <a href="${NamedRoutes.rootPath()}" class="nav-link active" aria-current="page">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="${NamedRoutes.rootPath()}" class="nav-link">Pages</a>
+                        <a href="${NamedRoutes.urlsPath()}" class="nav-link">Pages</a>
                     </li>
                 </ul>
             </header>
         </div>
 
-        ${content}
+        <main>
+            ${content}
+        </main>
+
 
         <div class="container">
-            <footer class="py-3 my-4">
+            <footer class="footer py-3 mt-4">
                 <ul class="nav justify-content-center border-bottom pb-3 mb-3">
                     <li class="nav-item">
                         <a href="${NamedRoutes.rootPath()}" class="nav-link px-2 text-body-secondary">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a href="${NamedRoutes.rootPath()}" class="nav-link px-2 text-body-secondary">Pages</a>
+                        <a href="${NamedRoutes.urlsPath()}" class="nav-link px-2 text-body-secondary">Pages</a>
                     </li>
                 </ul>
-                <p class="text-center text-body-secondary">Made by Elisa Moritz</p>
+                <p class="text-center text-body-secondary">
+                    Created by <a href="https://github.com/darklittlefinch">Elisa Moritz</a>
+                </p>
             </footer>
         </div>
 
