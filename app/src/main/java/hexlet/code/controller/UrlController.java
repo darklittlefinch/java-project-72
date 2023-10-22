@@ -41,11 +41,10 @@ public final class UrlController {
                 .toLowerCase()
                 .trim();
 
-        URL parsedUrl;
-        String normalizedURL = null;
+        String normalizedURL;
 
         try {
-            parsedUrl = new URI(input).toURL();
+            URL parsedUrl = new URI(input).toURL();
             normalizedURL = NormalizedURL.getNormalizedURL(parsedUrl);
         } catch (MalformedURLException | URISyntaxException | IllegalArgumentException e) {
             ctx.sessionAttribute("flash", "Incorrect URL");
