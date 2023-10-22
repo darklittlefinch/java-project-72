@@ -16,7 +16,9 @@ import io.javalin.Javalin;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.stream.Collectors;
 
@@ -61,6 +63,18 @@ public final class App {
         return hikariConfig;
     }
 
+    private static InputStream getFileFromResourceAsStream(String fileName) {
+        ClassLoader classLoader = App.class.getClassLoader();
+        InputStream is = classLoader.getResourceAsStream(fileName);
+        return is;
+    }
+
+    private static String getContentFromStream(InputStream is) throws IOException {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))) {
+            return reader.lines().collect(Collectors.joining("\n"));
+        }
+    }
+
     private static TemplateEngine createTemplateEngine() {
         ClassLoader classLoader = App.class.getClassLoader();
         ResourceCodeResolver codeResolver = new ResourceCodeResolver("templates", classLoader);
@@ -75,9 +89,7 @@ public final class App {
 
         var dataSource = new HikariDataSource(hikariConfig);
 
-        var inputStream = App.class.getClassLoader().getResourceAsStream(getSqlFilename());
-        var reader = new BufferedReader(new InputStreamReader(inputStream));
-        var sql = reader.lines().collect(Collectors.joining("\n"));
+        String sql = getContentFromStream(getFileFromResourceAsStream(getSqlFilename()));
 
         log.info(sql);
         try (var connection = dataSource.getConnection();
