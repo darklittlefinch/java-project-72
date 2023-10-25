@@ -18,3 +18,6 @@ CREATE TABLE url_checks (
     created_at TIMESTAMP,
     CONSTRAINT pk_url_checks PRIMARY KEY (id)
 );
+
+ALTER TABLE url_checks
+    ADD CONSTRAINT fk_url_checks_url_id FOREIGN KEY (url_id) REFERENCES urls (id) ON DELETE RESTRICT ON UPDATE RESTRICT;
