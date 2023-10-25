@@ -42,10 +42,6 @@ public final class App {
         return System.getenv().getOrDefault("JDBC_DATABASE_URL", JDBC_URL_DEFAULT);
     }
 
-//    public static String getSqlFilename() {
-//        return isProduction() ? "schema-postgres.sql" : "schema.sql";
-//    }
-
     public static boolean isProduction() {
         return System.getenv().getOrDefault("APP_ENV", "dev").equals("prod");
     }
