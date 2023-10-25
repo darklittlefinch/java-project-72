@@ -42,9 +42,9 @@ public final class App {
         return System.getenv().getOrDefault("JDBC_DATABASE_URL", JDBC_URL_DEFAULT);
     }
 
-    public static String getSqlFilename() {
-        return isProduction() ? "schema-postgres.sql" : "schema.sql";
-    }
+//    public static String getSqlFilename() {
+//        return isProduction() ? "schema-postgres.sql" : "schema.sql";
+//    }
 
     public static boolean isProduction() {
         return System.getenv().getOrDefault("APP_ENV", "dev").equals("prod");
@@ -75,7 +75,7 @@ public final class App {
 
         var dataSource = new HikariDataSource(hikariConfig);
 
-        var inputStream = App.class.getClassLoader().getResourceAsStream(getSqlFilename());
+        var inputStream = App.class.getClassLoader().getResourceAsStream("schema.sql");
         var reader = new BufferedReader(new InputStreamReader(inputStream));
         var sql = reader.lines().collect(Collectors.joining("\n"));
 
