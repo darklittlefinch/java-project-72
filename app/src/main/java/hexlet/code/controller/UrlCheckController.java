@@ -4,7 +4,6 @@ import hexlet.code.model.UrlCheck;
 import hexlet.code.repository.UrlCheckRepository;
 import hexlet.code.repository.UrlRepository;
 import hexlet.code.util.NamedRoutes;
-import hexlet.code.util.NormalizedData;
 import hexlet.code.util.Time;
 import io.javalin.http.Context;
 import io.javalin.http.NotFoundResponse;
@@ -27,8 +26,13 @@ public final class UrlCheckController {
 
             var statusCode = response.getStatus();
             var title = doc.title();
-            var h1 = NormalizedData.getNormalizedHtmlItem(doc, "h1");
-            var description = NormalizedData.getNormalizedHtmlItem(doc, "meta[name=description]");
+
+            var h1Temp = doc.selectFirst("h1");
+            var h1 = h1Temp == null ? "" : h1Temp.text();
+
+            var descriptionTemp = doc.selectFirst("meta[name=description]");
+            var description = descriptionTemp == null ? "" : descriptionTemp.attr("content");
+
             var createdAt = Time.getCurrentTime();
 
             var urlCheck = new UrlCheck(statusCode, title, h1, description, urlId, createdAt);

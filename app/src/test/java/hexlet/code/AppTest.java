@@ -25,6 +25,7 @@ import java.util.StringJoiner;
 public final class AppTest {
     private static Javalin app;
     private static MockWebServer mockServer;
+    private static String urlName;
     private static final String HTML_PATH = "src/test/resources/index.html";
 
     public static String getContentOfHtmlFile() throws IOException {
@@ -42,9 +43,10 @@ public final class AppTest {
     @BeforeAll
     public static void beforeAll() throws IOException {
         mockServer = new MockWebServer();
+        urlName = mockServer.url("/").toString();
         var mockResponse = new MockResponse().setBody(getContentOfHtmlFile());
         mockServer.enqueue(mockResponse);
-        mockServer.start();
+//        mockServer.start();
     }
 
     @BeforeEach
@@ -128,7 +130,6 @@ public final class AppTest {
 
     @Test
     public void testCheckUrl() throws IOException, SQLException {
-        var urlName = mockServer.url("/").toString();
         var url = new Url(urlName, Time.getCurrentTime());
         UrlRepository.save(url);
 
@@ -143,7 +144,9 @@ public final class AppTest {
             var h1 = urlCheck.getH1();
             var description = urlCheck.getDescription();
 
-            assertThat(response.body().string()).contains(id, statusCode, title, h1, description);
+            assertThat(title).isEqualTo("This is a title");
+            assertThat(h1).isEqualTo("This is a header");
+            assertThat(description).isEqualTo("This is a description");
         });
     }
 }
