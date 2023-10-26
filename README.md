@@ -14,16 +14,16 @@ Click [here](https://darklittlefinch-page-analyzer.onrender.com/) to start check
 
 1\. On the empty field of the home page print name of the website you want to check and click "Check".
 
-![Add your website](https://ibb.co/CzQQzkg)
+<a href="https://ibb.co/CzQQzkg"><img src="https://i.ibb.co/7XKKXwP/NVIDIA-Share-ENb4t-NXR81.png" alt="NVIDIA-Share-ENb4t-NXR81" border="0"></a>
 
 2\. The website will be added to the list of other pages. Click on name of your website.
 
-![Choose your website](https://ibb.co/3Fgdp0D)
+<a href="https://ibb.co/3Fgdp0D"><img src="https://i.ibb.co/hd39BKP/NVIDIA-Share-HGs2-UXXwg-I.png" alt="NVIDIA-Share-HGs2-UXXwg-I" border="0"></a>
 
 3\. You are on the your website's page. Click on the button "Run check!" to start the first check of your site.
 
-![Start check](https://ibb.co/TH0PvQN)
+<a href="https://ibb.co/TH0PvQN"><img src="https://i.ibb.co/HrPGFc9/NVIDIA-Share-4rl9pmz6v-W.png" alt="NVIDIA-Share-4rl9pmz6v-W" border="0"></a>
 
 4\. Done! You can see results of the checking in a table under the button.
 
-![Get results](https://ibb.co/Db1z80F)
+<a href="https://ibb.co/Db1z80F"><img src="https://i.ibb.co/dcfjL8v/NVIDIA-Share-5-Vdy-Cy-Z1v-I.png" alt="NVIDIA-Share-5-Vdy-Cy-Z1v-I" border="0"></a>
