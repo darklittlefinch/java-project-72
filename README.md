@@ -10,7 +10,7 @@ This project is a website for checking other websites for SEO suitability based 
 
 Click [here](https://darklittlefinch-page-analyzer.onrender.com/) to start checking!.
 
-## How check your website
+## How to check your website
 
 1\. On the empty field of the home page print name of the website you want to check and click "Check".
 
